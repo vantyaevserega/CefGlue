@@ -6,7 +6,7 @@
         <AssemblyName>Xilium.CefGlue.Common</AssemblyName>
         <RootNamespace>Xilium.CefGlue.Common</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <PackageId>CefGlue.Common$(PackageSuffix)</PackageId>
+        <PackageId>Van.CefGlue.Common$(PackageSuffix)</PackageId>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
@@ -19,10 +19,6 @@
 
     <ItemGroup>
         <None Include="BaseCefBrowser.cs" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="System.Text.Json" />
     </ItemGroup>
 
     <ItemGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(DefineConstants), '(^|;)HAS_NLOG($|;)'))">
@@ -46,10 +42,10 @@
             <PrivateAssets>all</PrivateAssets>
         </ProjectReference>
 
-        <None Include="build\CefGlue.Common.props" Pack="True" PackagePath="build\CefGlue.Common$(PackageSuffix).props" />
-        <None Include="build\CefGlue.Common.targets" Pack="True" PackagePath="build\CefGlue.Common$(PackageSuffix).targets" />
-        <None Include="build\CefGlue.Common.props" Pack="True" PackagePath="buildTransitive\CefGlue.Common$(PackageSuffix).props" />
-        <None Include="build\CefGlue.Common.targets" Pack="True" PackagePath="buildTransitive\CefGlue.Common$(PackageSuffix).targets" />
+        <None Include="build\CefGlue.Common.props" Pack="True" PackagePath="build\$(PackageId).props" />
+        <None Include="build\CefGlue.Common.targets" Pack="True" PackagePath="build\$(PackageId).targets" />
+        <None Include="build\CefGlue.Common.props" Pack="True" PackagePath="buildTransitive\$(PackageId).props" />
+        <None Include="build\CefGlue.Common.targets" Pack="True" PackagePath="buildTransitive\$(PackageId).targets" />
     </ItemGroup>
 
     <Target DependsOnTargets="ResolveReferences" Name="CopyProjectReferencesToPackage">

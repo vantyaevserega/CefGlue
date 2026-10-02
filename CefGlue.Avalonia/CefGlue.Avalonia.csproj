@@ -5,7 +5,7 @@
     <RootNamespace>Xilium.CefGlue.Avalonia</RootNamespace>
     <AssemblyName>Xilium.CefGlue.Avalonia</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PackageId>CefGlue.Avalonia$(PackageSuffix)</PackageId>
+    <PackageId>Van.CefGlue.Avalonia$(PackageSuffix)</PackageId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
@@ -19,8 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference PrivateAssets="all" Include="Avalonia" />
-    <PackageReference Include="Avalonia.ReactiveUI" />
+    <PackageReference Include="Avalonia" />
     <PackageReference Include="System.Reactive.Linq" />
   </ItemGroup>
 

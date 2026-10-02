@@ -190,13 +190,13 @@ namespace Xilium.CefGlue.Avalonia.Platform
         private void OnAttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
         {
             VisibilityChanged?.Invoke(true);
-            if (e.Root is Window newWindow)
+            if (TopLevel.GetTopLevel(e.RootVisual) is Window newWindow)
             {
                 _windowStateChangedObservable = newWindow.GetPropertyChangedObservable(Window.WindowStateProperty).Subscribe(OnHostWindowStateChanged);
             }
-            if (e.Root.RenderScaling != RenderSurface.DeviceScaleFactor)
+            if (e.PresentationSource.RenderScaling != RenderSurface.DeviceScaleFactor)
             {
-                RenderSurface.DeviceScaleFactor = (float)e.Root.RenderScaling;
+                RenderSurface.DeviceScaleFactor = (float)e.PresentationSource.RenderScaling;
                 ScreenInfoChanged?.Invoke(RenderSurface.DeviceScaleFactor);
             }
         }
@@ -268,10 +268,10 @@ namespace Xilium.CefGlue.Avalonia.Platform
             var lastPointerEvent = this._lastPointerEvent; // story a copy, since this might be other thread
             if (lastPointerEvent != null)
             {
-                var dataObject = new DataObject();
-                dataObject.Set(DataFormats.Text, dragData.FragmentText);
+                var dataTransfer = new DataTransfer();
+                dataTransfer.Add(DataTransferItem.CreateText(dragData.FragmentText));
 
-                var result = await Dispatcher.UIThread.InvokeAsync(() => DragDrop.DoDragDrop(lastPointerEvent, dataObject, allowedOps.AsDragDropEffects()));
+                var result = await Dispatcher.UIThread.InvokeAsync(() => DragDrop.DoDragDropAsync(lastPointerEvent, dataTransfer, allowedOps.AsDragDropEffects()));
                 this._lastPointerEvent = null;
                 _previousCursor = null;
                 _currentDragCursor = null;

@@ -2,7 +2,6 @@ using System;
 using System.Globalization;
 using System.Reactive.Linq;
 using System.Threading;
-using Avalonia.ReactiveUI;
 using Avalonia.Threading;
 using Xilium.CefGlue.Common.Handlers;
 
@@ -54,9 +53,10 @@ namespace Xilium.CefGlue.Avalonia
             {
                 if (_pump == null)
                 {
-                    _pump = Observable.Interval(TimeSpan.FromMilliseconds(PumpIntervalMs)).ObserveOn(AvaloniaScheduler.Instance).Subscribe((i) =>
+                    // Same marshalling as Avalonia.ReactiveUI's AvaloniaScheduler, which is gone in Avalonia 12.
+                    _pump = Observable.Interval(TimeSpan.FromMilliseconds(PumpIntervalMs)).Subscribe((i) =>
                     {
-                        CefRuntime.DoMessageLoopWork();
+                        Dispatcher.UIThread.Post(CefRuntime.DoMessageLoopWork, DispatcherPriority.Background);
                     });
                 }
             }
